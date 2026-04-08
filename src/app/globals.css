@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f6f2;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-soft: #f7faf9;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-nunito);
+  --font-serif: var(--font-merriweather);
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(16, 185, 129, 0.06), transparent 40%),
+    radial-gradient(circle at 90% 20%, rgba(59, 130, 246, 0.05), transparent 36%),
+    var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-nunito), sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-merriweather), serif;
+}
+
+.reveal-start {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+.reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 650ms ease, transform 650ms ease;
+}
+
+.premium-surface {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 251, 251, 0.96));
+  box-shadow: 0 14px 30px -20px rgba(15, 23, 42, 0.25);
+}
+
+.map-ping {
+  display: inline-flex;
+  height: 12px;
+  width: 12px;
+  border-radius: 9999px;
+  background: #059669;
+  box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.65);
+  animation: ping-soft 1.8s infinite;
+}
+
+@keyframes ping-soft {
+  0% {
+    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(5, 150, 105, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0);
+  }
 }

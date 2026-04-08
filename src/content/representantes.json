@@ -1,0 +1,40 @@
+{
+  "missionarios": [
+    {
+      "id": "manuel-cassamo-fernando",
+      "nome": "Manuel Cassamo Fernando",
+      "pais": "Moçambique",
+      "regiao": "Marromeu, Sofala (Bairro 25 de Setembro)",
+      "funcao": "Missionário",
+      "descricao": "Estou em África, Moçambique, realizando o trabalho de alimentar crianças carentes com almoços aos fins de semana, por meio das doações dos irmãos no Brasil.",
+      "foto": "/api/assets/Manuel/1.jpeg",
+      "videoUrl": "https://www.instagram.com/manuelcassamofernando?igsh=MTkydnlpcHY0Y2FyOQ==",
+      "latitude": -18.2833,
+      "longitude": 35.8833,
+      "galeria": [
+        "/api/assets/Manuel/2.jpeg",
+        "/api/assets/Manuel/3.jpeg",
+        "/api/assets/Manuel/4.jpeg",
+        "/api/assets/Manuel/5.jpeg",
+        "/api/assets/Manuel/6.jpeg"
+      ]
+    },
+    {
+      "id": "isaias-felix-tchiraza",
+      "nome": "Isaías Félix Tchiraza",
+      "pais": "Moçambique",
+      "regiao": "Nhamatanda, Sofala (Beira - centro do país)",
+      "funcao": "Apoio a crianças carentes",
+      "descricao": "A obra tem sido uma benção aqui em África, Moçambique. O missionário Isaías alimenta mais de 200 crianças necessitadas todos os sábados.",
+      "foto": "/api/assets/Isaias/1.jpeg",
+      "videoUrl": "https://www.instagram.com/isaias_felix_misse?igsh=cHRxODcxZXpqajVo",
+      "galeria": [
+        "/api/assets/Isaias/2.jpeg",
+        "/api/assets/Isaias/3.jpeg",
+        "/api/assets/Isaias/4.jpeg",
+        "/api/assets/Isaias/5.jpeg",
+        "/api/assets/Isaias/6.jpeg"
+      ]
+    }
+  ]
+}

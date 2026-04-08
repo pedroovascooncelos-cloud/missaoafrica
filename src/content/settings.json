@@ -1,0 +1,93 @@
+{
+  "instagramProfileUrl": "https://www.instagram.com/sofalamcz1210/",
+  "instagramVideos": [
+    {
+      "title": "Postagem 1 - Missão África",
+      "url": "https://www.instagram.com/p/DWt-nh7jrAj/"
+    },
+    {
+      "title": "Postagem 2 - Missão África",
+      "url": "https://www.instagram.com/p/DWt7nbTjgR8/"
+    },
+    {
+      "title": "Postagem 3 - Missão África",
+      "url": "https://www.instagram.com/p/DWjQkSUDhlp/"
+    },
+    {
+      "title": "Postagem 4 - Missão África",
+      "url": "https://www.instagram.com/p/DWjPiKADm43/"
+    },
+    {
+      "title": "Postagem 5 - Missão África",
+      "url": "https://www.instagram.com/p/DWjO9wJDovN/"
+    },
+    {
+      "title": "Postagem 6 - Missão África",
+      "url": "https://www.instagram.com/p/DWMNsrvDuq4/"
+    },
+    {
+      "title": "Postagem 7 - Missão África",
+      "url": "https://www.instagram.com/p/DV6NRc-DsTj/"
+    },
+    {
+      "title": "Postagem 8 - Missão África",
+      "url": "https://www.instagram.com/p/DVBt0rCEab2/"
+    },
+    {
+      "title": "Postagem 9 - Missão África",
+      "url": "https://www.instagram.com/p/DVBsDuBEfRF/"
+    }
+  ],
+  "quickStats": [
+    {
+      "label": "Famílias alcançadas",
+      "value": "Em atualização",
+      "description": "Aguardando consolidação dos dados reais."
+    },
+    {
+      "label": "Refeições entregues",
+      "value": "Em atualização",
+      "description": "Aguardando consolidação dos dados reais."
+    },
+    {
+      "label": "Missionários ativos",
+      "value": "2",
+      "description": "Com cadastro e autorização já recebidos."
+    }
+  ],
+  "transparencyGoogleSheetUrl": "",
+  "receiptLinks": [],
+  "contact": {
+    "email": "contato@missionafrica.org.br",
+    "whatsapp": "+55 (82) 99929-3570",
+    "city": "Maceió - AL, Brasil"
+  },
+  "pixData": {
+    "chave": "doeafricamcz@gmail.com",
+    "titular": "Projeto Missão África - Igreja Presbiteriana Renovada de Maceió",
+    "banco": "Nubank",
+    "cnpj": ""
+  },
+  "impactByDonation": [
+    {
+      "valor": 10,
+      "impacto": "3 refeições completas para crianças."
+    },
+    {
+      "valor": 50,
+      "impacto": "Água potável para uma família por uma semana."
+    },
+    {
+      "valor": 150,
+      "impacto": "Kit alimentar e apoio emergencial para 1 família."
+    },
+    {
+      "valor": 400,
+      "impacto": "Contribui para manutenção mensal de um missionário em campo."
+    }
+  ],
+  "socialLinks": {
+    "instagram": "https://www.instagram.com/sofalamcz1210/",
+    "youtube": "https://youtube.com"
+  }
+}

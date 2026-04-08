@@ -1,0 +1,136 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+locale: "pt"
+
+collections:
+  - name: "configuracoes"
+    label: "Configurações do Site"
+    files:
+      - label: "Informações Gerais"
+        name: "settings"
+        file: "src/content/settings.json"
+        format: "json"
+        fields:
+          - { label: "URL do perfil no Instagram", name: "instagramProfileUrl", widget: "string" }
+          - label: "Vídeos/links do Instagram"
+            name: "instagramVideos"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Título", name: "title", widget: "string" }
+              - {
+                  label: "URL (reel/post para embed)",
+                  name: "url",
+                  widget: "string",
+                  hint: "Use link de post ou reel (ex: /reel/ ou /p/). Link de perfil não aparece incorporado."
+                }
+          - label: "Números rápidos da página inicial"
+            name: "quickStats"
+            widget: "list"
+            summary: "{{fields.label}}: {{fields.value}}"
+            fields:
+              - { label: "Título", name: "label", widget: "string" }
+              - { label: "Valor", name: "value", widget: "string" }
+              - { label: "Descrição", name: "description", widget: "string" }
+          - {
+              label: "URL de embed do Google Sheets (Transparência)",
+              name: "transparencyGoogleSheetUrl",
+              widget: "string"
+            }
+          - label: "Links de comprovantes PDF"
+            name: "receiptLinks"
+            widget: "list"
+            summary: "{{fields.label}}"
+            fields:
+              - { label: "Texto do link", name: "label", widget: "string" }
+              - { label: "URL do PDF", name: "url", widget: "string" }
+          - label: "Contato"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "WhatsApp", name: "whatsapp", widget: "string" }
+              - { label: "Cidade", name: "city", widget: "string" }
+          - label: "Dados do PIX"
+            name: "pixData"
+            widget: "object"
+            fields:
+              - { label: "Chave PIX", name: "chave", widget: "string" }
+              - { label: "Titular", name: "titular", widget: "string" }
+              - { label: "Banco", name: "banco", widget: "string" }
+              - { label: "CNPJ", name: "cnpj", widget: "string" }
+          - label: "Impacto por valor doado"
+            name: "impactByDonation"
+            widget: "list"
+            summary: "R$ {{fields.valor}}"
+            fields:
+              - { label: "Valor em reais", name: "valor", widget: "number", value_type: "int" }
+              - { label: "Descrição do impacto", name: "impacto", widget: "string" }
+          - label: "Redes sociais"
+            name: "socialLinks"
+            widget: "object"
+            fields:
+              - { label: "Instagram", name: "instagram", widget: "string" }
+              - { label: "YouTube", name: "youtube", widget: "string" }
+
+  - name: "representantes"
+    label: "Representantes"
+    files:
+      - label: "Lista de missionários"
+        name: "representantes_lista"
+        file: "src/content/representantes.json"
+        format: "json"
+        fields:
+          - label: "Missionários"
+            name: "missionarios"
+            widget: "list"
+            summary: "{{fields.nome}} - {{fields.pais}}"
+            fields:
+              - { label: "ID (slug, sem espaço)", name: "id", widget: "string", hint: "ex: joao-silva" }
+              - { label: "Nome", name: "nome", widget: "string" }
+              - { label: "País", name: "pais", widget: "string" }
+              - { label: "Região/Cidade", name: "regiao", widget: "string" }
+              - { label: "Função na missão", name: "funcao", widget: "string" }
+              - { label: "Descrição", name: "descricao", widget: "text" }
+              - { label: "Foto principal", name: "foto", widget: "image" }
+              - { label: "Link do vídeo/reel", name: "videoUrl", widget: "string" }
+              - { label: "Latitude", name: "latitude", widget: "number", value_type: "float", required: false, hint: "Opcional. Ex: -9.6658" }
+              - { label: "Longitude", name: "longitude", widget: "number", value_type: "float", required: false, hint: "Opcional. Ex: 34.5228" }
+              - label: "Galeria de fotos"
+                name: "galeria"
+                widget: "list"
+                field: { label: "Imagem", name: "imagem", widget: "image" }
+
+  - name: "transparencia"
+    label: "Transparência"
+    files:
+      - label: "Relatórios e linha do tempo"
+        name: "transparencia_dados"
+        file: "src/content/transparencia.json"
+        format: "json"
+        fields:
+          - label: "Relatórios mensais"
+            name: "monthlyReports"
+            widget: "list"
+            summary: "{{fields.mes}}"
+            fields:
+              - { label: "Mês", name: "mes", widget: "string" }
+              - { label: "Total de doações (R$)", name: "totalDoacoes", widget: "number", value_type: "int" }
+              - label: "Despesas por categoria"
+                name: "despesas"
+                widget: "list"
+                fields:
+                  - { label: "Categoria", name: "categoria", widget: "string" }
+                  - { label: "Valor (R$)", name: "valor", widget: "number", value_type: "int" }
+                  - { label: "Porcentagem", name: "porcentagem", widget: "number", value_type: "int" }
+          - label: "Linha do tempo"
+            name: "timeline"
+            widget: "list"
+            fields:
+              - { label: "Mês", name: "mes", widget: "string" }
+              - { label: "Destaque", name: "destaque", widget: "string" }
