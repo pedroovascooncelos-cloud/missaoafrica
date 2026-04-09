@@ -1,24 +1,56 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 import { trackEvent } from "@/lib/analytics";
 
 export function DonationConfirmationForm() {
-  function handleSubmit() {
-    trackEvent("submit_confirmacao_doacao", { origem: "pagina_confirmar_doacao" });
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const formData = new FormData(event.currentTarget);
+      const payload = new URLSearchParams();
+
+      for (const [key, value] of formData.entries()) {
+        payload.append(key, String(value));
+      }
+
+      const response = await fetch("/__forms.html", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload.toString(),
+      });
+
+      if (!response.ok) {
+        throw new Error("Falha ao enviar formulário");
+      }
+
+      trackEvent("submit_confirmacao_doacao", { origem: "pagina_confirmar_doacao" });
+      router.push("/doacao/obrigado");
+    } catch {
+      setErrorMessage(
+        "Não foi possível enviar agora. Tente novamente em alguns instantes ou fale com a equipe via WhatsApp.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
     <form
       name="confirmacao-doacao"
-      method="POST"
-      action="/doacao/obrigado"
-      data-netlify="true"
-      data-netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
       className="space-y-4"
     >
       <input type="hidden" name="form-name" value="confirmacao-doacao" />
-      <input type="hidden" name="bot-field" />
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="text-sm text-slate-700">
@@ -90,10 +122,13 @@ export function DonationConfirmationForm() {
 
       <button
         type="submit"
+        disabled={isSubmitting}
         className="rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700"
       >
-        Enviar confirmação
+        {isSubmitting ? "Enviando..." : "Enviar confirmação"}
       </button>
+
+      {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
     </form>
   );
 }
