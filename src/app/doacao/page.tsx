@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { PixCopyButton } from "@/components/PixCopyButton";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { SectionHeading } from "@/components/SectionHeading";
-import { impactByDonation, pixData } from "@/data/site";
+import { impactByDonation, institutionalData, pixData } from "@/data/site";
 import { formatCurrency } from "@/components/format";
 
 export const metadata: Metadata = {
@@ -50,6 +51,12 @@ export default function DonationPage() {
               ) : null}
             </div>
             <PixCopyButton pixKey={pixData.chave} />
+            <Link
+              href="/doacao/confirmar"
+              className="ml-3 inline-flex rounded-full border border-emerald-300 bg-white px-5 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-50"
+            >
+              Já doei, enviar confirmação
+            </Link>
           </section>
         </RevealOnScroll>
 
@@ -80,6 +87,46 @@ export default function DonationPage() {
         </section>
       </RevealOnScroll>
 
+      <RevealOnScroll className="mt-8">
+        <section className="premium-surface rounded-2xl p-6">
+          <h2 className="text-xl font-bold text-slate-900">Informações institucionais</h2>
+          <div className="mt-3 space-y-1 text-sm text-slate-700">
+            <p>
+              <strong>Organização:</strong> {institutionalData.organizacao}
+            </p>
+            <p>
+              <strong>Responsável:</strong> {institutionalData.responsavelLegal}
+            </p>
+            <p>
+              <strong>Endereço:</strong> {institutionalData.endereco}
+            </p>
+            <p>
+              <strong>CNPJ:</strong> {institutionalData.cnpj || "Em atualização"}
+            </p>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Link
+              href="/termos"
+              className="rounded-full border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              Termos de Uso
+            </Link>
+            <Link
+              href="/privacidade"
+              className="rounded-full border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              Política de Privacidade
+            </Link>
+            <Link
+              href="/politica-de-doacoes"
+              className="rounded-full border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              Política de Doações
+            </Link>
+          </div>
+        </section>
+      </RevealOnScroll>
+
       <RevealOnScroll className="mt-12">
         <section className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-600 to-emerald-700 p-7 text-white shadow-lg">
           <h2 className="text-3xl font-bold">Doe agora e participe da transformação</h2>
@@ -89,10 +136,10 @@ export default function DonationPage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
-              href="#"
+              href="/doacao/confirmar"
               className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
             >
-              Quero doar por PIX
+              Confirmar doação
             </a>
             <a
               href="/transparencia"

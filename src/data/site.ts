@@ -61,3 +61,5 @@ export const transparencyGoogleSheetUrl = settings.transparencyGoogleSheetUrl;
 export const receiptLinks = settings.receiptLinks as ReceiptLink[];
 export const contact = settings.contact;
 export const socialLinks = settings.socialLinks;
+export const institutionalData = settings.institutionalData;
+export const analytics = settings.analytics;

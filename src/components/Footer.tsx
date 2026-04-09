@@ -53,6 +53,26 @@ export function Footer() {
               Relatórios
             </Link>
           </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Link
+              href="/termos"
+              className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+            >
+              Termos
+            </Link>
+            <Link
+              href="/privacidade"
+              className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+            >
+              Privacidade
+            </Link>
+            <Link
+              href="/politica-de-doacoes"
+              className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+            >
+              Política de doações
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

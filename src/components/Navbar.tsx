@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { trackEvent } from "@/lib/analytics";
+
 const navItems = [
   { href: "/", label: "Início" },
   { href: "/representantes", label: "Representantes" },
@@ -46,12 +48,14 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Link
             href="/admin"
+            onClick={() => trackEvent("click_admin_nav", { origem: "navbar" })}
             className="rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-50"
           >
             Admin
           </Link>
           <Link
             href="/doacao"
+            onClick={() => trackEvent("click_doe_agora_nav", { origem: "navbar" })}
             className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
           >
             Doe Agora

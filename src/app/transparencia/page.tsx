@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { FinancialTable } from "@/components/FinancialTable";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { SectionHeading } from "@/components/SectionHeading";
-import { monthlyReports, receiptLinks, timeline, transparencyGoogleSheetUrl } from "@/data/site";
+import { monthlyReports, receiptLinks, representatives, timeline, transparencyGoogleSheetUrl } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Transparência",
@@ -45,6 +45,23 @@ export default function TransparencyPage() {
           </section>
         </RevealOnScroll>
       )}
+
+      <RevealOnScroll className="mt-8">
+        <section className="premium-surface rounded-2xl p-6">
+          <h3 className="text-lg font-semibold text-slate-900">Relatório operacional inicial</h3>
+          <p className="mt-2 text-sm text-slate-700">
+            Enquanto os demonstrativos financeiros consolidados são finalizados, publicamos o status
+            operacional real já validado em campo.
+          </p>
+          <ul className="mt-4 space-y-2 text-sm text-slate-700">
+            {representatives.map((rep) => (
+              <li key={rep.id}>
+                <strong>{rep.nome}</strong> - {rep.regiao}, {rep.pais} ({rep.funcao})
+              </li>
+            ))}
+          </ul>
+        </section>
+      </RevealOnScroll>
 
       {hasSheet ? (
         <RevealOnScroll className="mt-12">

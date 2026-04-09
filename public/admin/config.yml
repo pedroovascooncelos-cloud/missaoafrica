@@ -77,6 +77,26 @@ collections:
             fields:
               - { label: "Instagram", name: "instagram", widget: "string" }
               - { label: "YouTube", name: "youtube", widget: "string" }
+          - label: "Dados institucionais"
+            name: "institutionalData"
+            widget: "object"
+            fields:
+              - { label: "Organização", name: "organizacao", widget: "string" }
+              - { label: "Responsável legal", name: "responsavelLegal", widget: "string" }
+              - { label: "CNPJ", name: "cnpj", widget: "string", required: false }
+              - { label: "Endereço", name: "endereco", widget: "string" }
+              - { label: "Email LGPD", name: "emailLgpd", widget: "string" }
+          - label: "Analytics"
+            name: "analytics"
+            widget: "object"
+            fields:
+              - {
+                  label: "Google Analytics (GA4 Measurement ID)",
+                  name: "gaMeasurementId",
+                  widget: "string",
+                  required: false,
+                  hint: "Exemplo: G-XXXXXXXXXX"
+                }
 
   - name: "representantes"
     label: "Representantes"

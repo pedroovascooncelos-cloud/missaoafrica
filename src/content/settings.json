@@ -89,5 +89,15 @@
   "socialLinks": {
     "instagram": "https://www.instagram.com/sofalamcz1210/",
     "youtube": "https://youtube.com"
+  },
+  "institutionalData": {
+    "organizacao": "Projeto Missão África - Igreja Presbiteriana Renovada de Maceió",
+    "responsavelLegal": "Coordenação Missionária",
+    "cnpj": "",
+    "endereco": "Maceió - AL, Brasil",
+    "emailLgpd": "contato@missionafrica.org.br"
+  },
+  "analytics": {
+    "gaMeasurementId": ""
   }
 }

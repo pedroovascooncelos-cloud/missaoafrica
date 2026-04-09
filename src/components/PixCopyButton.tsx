@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { trackEvent } from "@/lib/analytics";
+
 type PixCopyButtonProps = {
   pixKey: string;
 };
@@ -12,6 +14,7 @@ export function PixCopyButton({ pixKey }: PixCopyButtonProps) {
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(pixKey);
+      trackEvent("click_copiar_pix", { origem: "pagina_doacao" });
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
