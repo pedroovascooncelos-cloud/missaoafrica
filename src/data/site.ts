@@ -63,3 +63,4 @@ export const contact = settings.contact;
 export const socialLinks = settings.socialLinks;
 export const institutionalData = settings.institutionalData;
 export const analytics = settings.analytics;
+export const netlifyLinks = settings.netlifyLinks;

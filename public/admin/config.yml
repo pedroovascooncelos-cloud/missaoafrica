@@ -97,6 +97,14 @@ collections:
                   required: false,
                   hint: "Exemplo: G-XXXXXXXXXX"
                 }
+          - label: "Links rápidos Netlify"
+            name: "netlifyLinks"
+            widget: "object"
+            fields:
+              - { label: "Dashboard", name: "dashboard", widget: "string", required: false }
+              - { label: "Forms", name: "forms", widget: "string", required: false }
+              - { label: "Deploys", name: "deploys", widget: "string", required: false }
+              - { label: "Identity", name: "identity", widget: "string", required: false }
 
   - name: "representantes"
     label: "Representantes"
