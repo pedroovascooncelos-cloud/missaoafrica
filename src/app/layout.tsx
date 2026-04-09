@@ -3,6 +3,7 @@ import { Merriweather, Nunito_Sans } from "next/font/google";
 
 import { Analytics } from "@/components/Analytics";
 import { Footer } from "@/components/Footer";
+import { IdentityTokenRedirect } from "@/components/IdentityTokenRedirect";
 import { Navbar } from "@/components/Navbar";
 import { analytics } from "@/data/site";
 
@@ -45,6 +46,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${nunito.variable} ${merriweather.variable} h-full antialiased`}>
       <body className="min-h-full bg-stone-50 text-slate-900">
         <Analytics measurementId={analytics.gaMeasurementId} />
+        <IdentityTokenRedirect />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
