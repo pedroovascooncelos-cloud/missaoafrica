@@ -1,6 +1,6 @@
 # Missão África - Site institucional
 
-Site em Next.js + Tailwind para missão humanitária da igreja, com páginas de impacto, representantes, transparência e doação.
+Site em Next.js + Tailwind para missão humanitária da igreja, com páginas de impacto, representantes, transparência, doação e painel admin nativo.
 
 ## Rodar localmente
 
@@ -9,99 +9,87 @@ npm install
 npm run dev
 ```
 
-Acesse: `http://localhost:3000`
+Acesse `http://localhost:3000`.
 
-## Onde editar conteúdo sem programar
+## Variáveis de ambiente
 
-### Opção principal (recomendada): painel `/admin`
+Copie `.env.example` para `.env.local` e preencha:
 
-Depois de publicar no Netlify e ativar o Identity/Git Gateway:
+- `NEXT_PUBLIC_FIREBASE_*` para login administrativo no browser
+- `FIREBASE_*` para leitura/escrita segura via `firebase-admin`
+- `ADMIN_ALLOWED_EMAILS` com a lista de e-mails autorizados no admin
+- `USE_FIRESTORE_CONTENT=true` para ativar a leitura pública pelo Firestore
+- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY` e `CLOUDINARY_API_SECRET` para upload de imagens
 
-- Acesse `https://SEU-SITE/admin`
-- Faça login
-- Edite os campos visuais (Instagram, contatos, links de PDF, PIX, etc.)
-- Clique em **Publish**
+Enquanto `USE_FIRESTORE_CONTENT=false`, o site público continua lendo os JSONs locais como fallback.
 
-O painel grava direto no arquivo `src/content/settings.json` via Git.
+## Painel administrativo
 
-Você também edita sem código:
+O painel fica em `/admin` e usa:
 
-- `src/content/representantes.json` (dados e fotos dos missionários)
-- `src/content/transparencia.json` (relatórios e linha do tempo)
+- `Firebase Auth` com e-mail/senha
+- `Firestore` para persistência do conteúdo
+- `Cloudinary` para upload de imagens dos representantes
 
-No painel `/admin` isso aparece nas seções:
+Seções editáveis:
 
-- **Configurações do Site**
-- **Representantes**
-- **Transparência**
+- `Configurações`
+- `Representantes`
+- `Transparência`
 
-### Opção alternativa (rápida)
+## Seed inicial do Firestore
 
-Editar manualmente o arquivo `src/content/settings.json`.
+Para validar o conteúdo antes de gravar:
 
-## Deploy no Netlify
+```bash
+npm run seed:firestore:dry
+```
 
-1. Suba este repositório para o GitHub.
-2. No Netlify, clique em **Add new site > Import an existing project**.
-3. Conecte ao repositório.
-4. Build command: `npm run build`
-5. O plugin oficial Next.js já está configurado em `netlify.toml`.
-6. Faça deploy.
+Para enviar os JSONs atuais ao Firestore:
 
-## Habilitar painel administrativo no Netlify
+```bash
+npm run seed:firestore
+```
 
-No dashboard do Netlify:
+O seed usa como fonte:
 
-1. **Identity** -> Enable Identity
-2. **Identity** -> Registration preferences -> Invite only
-3. **Identity** -> Services -> Enable Git Gateway
-4. Convide o usuário que vai editar conteúdo
-5. Acesse `/admin`
+- `src/content/settings.json`
+- `src/content/representantes.json`
+- `src/content/transparencia.json`
 
-## Firebase é necessário?
+## Camada de dados
 
-Não. Para este projeto institucional, o melhor fluxo é:
+O consumo público passa por:
 
-- GitHub + Netlify + painel `/admin` (Decap CMS)
+- `src/data/site.ts`
+- `src/data/site-repository.ts`
 
-Vantagens:
+Fluxo atual:
 
-- simples de manter
-- baixo custo
-- edição sem programar
-- histórico de alterações no Git
+1. tenta ler o Firestore no servidor
+2. se o ambiente não estiver pronto, usa fallback para os JSONs locais
+3. revalida cache automaticamente conforme `FIRESTORE_CONTENT_REVALIDATE_SECONDS`
 
-Use Firebase apenas se no futuro precisar de recursos em tempo real, autenticação avançada ou app próprio.
+## Confirmação de doação
 
-## Como trocar fotos e dados reais dos missionários
-
-1. Acesse `/admin`
-2. Vá em **Representantes**
-3. Edite um missionário existente ou adicione um novo
-4. Envie foto principal e galeria pelo próprio painel
-5. Preencha país, região, função, descrição e vídeo. Coordenadas (lat/lng) são opcionais.
-6. Clique em **Publish**
-
-As imagens enviadas ficam em `public/uploads`.
-
-## Mapa da missão
-
-O mapa usa os dados dos missionários cadastrados.
-Quando houver latitude e longitude, os marcadores ficam posicionados com precisão.
+O formulário de confirmação envia para `api/doacoes/confirmacao` e grava no Firestore, removendo a dependência operacional de Netlify Forms.
 
 ## Arquivos importantes
 
-- `src/content/settings.json` -> conteúdo editável
-- `src/content/representantes.json` -> missionários (dados, fotos e local; coordenadas opcionais)
-- `src/content/transparencia.json` -> relatórios financeiros reais
-- `public/admin/config.yml` -> estrutura do painel admin
-- `public/admin/index.html` -> app do painel admin
-- `src/data/site.ts` -> camada de dados usada pelas páginas
+- `src/types/site.ts` -> contratos e validações do conteúdo
+- `src/data/site.ts` -> fachada pública dos dados do site
+- `src/data/site-repository.ts` -> leitura/escrita Firestore com fallback local
+- `src/app/admin/page.tsx` -> shell do novo admin
+- `src/components/admin/AdminAuthForm.tsx` -> login Firebase
+- `src/components/admin/AdminDashboard.tsx` -> formulários das seções
+- `scripts/seed-firestore.ts` -> seed dos dados atuais
+- `firestore.rules` -> regras iniciais fechadas para acesso direto de clientes
 - `docs/mensagem-missionarios.md` -> mensagem pronta para coleta de dados
 
 ## Stack
 
 - Next.js (App Router)
 - Tailwind CSS
-- Decap CMS (painel admin Git-based)
-- Netlify (deploy)
+- Firebase Auth
+- Firestore
+- Cloudinary

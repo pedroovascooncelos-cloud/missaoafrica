@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f6f2;
-  --foreground: #0f172a;
+  --background: #ece8de;
+  --foreground: #111827;
   --surface: #ffffff;
-  --surface-soft: #f7faf9;
+  --surface-soft: #f3efe6;
 }
 
 @theme inline {
@@ -16,8 +16,9 @@
 
 body {
   background:
-    radial-gradient(circle at 10% 0%, rgba(16, 185, 129, 0.06), transparent 40%),
-    radial-gradient(circle at 90% 20%, rgba(59, 130, 246, 0.05), transparent 36%),
+    radial-gradient(circle at 12% 0%, rgba(49, 65, 129, 0.12), transparent 40%),
+    radial-gradient(circle at 88% 18%, rgba(180, 120, 32, 0.12), transparent 36%),
+    linear-gradient(180deg, rgba(17, 24, 39, 0.02), rgba(236, 232, 222, 0)),
     var(--background);
   color: var(--foreground);
   font-family: var(--font-nunito), sans-serif;
@@ -42,9 +43,11 @@ h4 {
 }
 
 .premium-surface {
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 251, 251, 0.96));
-  box-shadow: 0 14px 30px -20px rgba(15, 23, 42, 0.25);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(248, 246, 242, 0.93));
+  box-shadow:
+    0 22px 44px -30px rgba(15, 23, 42, 0.28),
+    0 12px 20px -18px rgba(15, 23, 42, 0.22);
 }
 
 .map-ping {
@@ -52,19 +55,19 @@ h4 {
   height: 12px;
   width: 12px;
   border-radius: 9999px;
-  background: #059669;
-  box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.65);
+  background: #b45309;
+  box-shadow: 0 0 0 0 rgba(180, 83, 9, 0.65);
   animation: ping-soft 1.8s infinite;
 }
 
 @keyframes ping-soft {
   0% {
-    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.45);
+    box-shadow: 0 0 0 0 rgba(180, 83, 9, 0.45);
   }
   70% {
-    box-shadow: 0 0 0 12px rgba(5, 150, 105, 0);
+    box-shadow: 0 0 0 12px rgba(180, 83, 9, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0);
+    box-shadow: 0 0 0 0 rgba(180, 83, 9, 0);
   }
 }

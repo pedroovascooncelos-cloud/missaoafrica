@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 
 import { RevealOnScroll } from "@/components/RevealOnScroll";
-import { pixData } from "@/data/site";
+import { getSiteSettings } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Política de Doações e Reembolsos",
   description: "Regras sobre doações, validação de comprovantes e tratativas de estorno.",
 };
 
-export default function DonationsPolicyPage() {
+export default async function DonationsPolicyPage() {
+  const { pixData } = await getSiteSettings();
+
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
       <RevealOnScroll>

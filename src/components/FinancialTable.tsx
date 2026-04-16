@@ -1,4 +1,4 @@
-import { MonthlyReport } from "@/data/site";
+import type { MonthlyReport } from "@/types/site";
 
 import { formatCurrency } from "./format";
 

@@ -6,15 +6,12 @@ import { MissionMap } from "@/components/MissionMap";
 import { MissionMediaCarousel } from "@/components/MissionMediaCarousel";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { SectionHeading } from "@/components/SectionHeading";
-import { StatsGrid } from "@/components/StatsGrid";
 import {
+  getMissionImages,
+  getRepresentatives,
+  getSiteSettings,
   heroMessage,
-  instagramProfileUrl,
-  instagramVideos,
-  missionImages,
   missionStatement,
-  quickStats,
-  representatives,
 } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -23,7 +20,13 @@ export const metadata: Metadata = {
     "Conheça a missão, veja o impacto real e apoie missionários na África com doações transparentes.",
 };
 
-export default function Home() {
+export default async function Home() {
+  const [settings, representatives, missionImages] = await Promise.all([
+    getSiteSettings(),
+    getRepresentatives(),
+    getMissionImages(),
+  ]);
+  const { instagramProfileUrl, instagramVideos, quickStats } = settings;
   const hasInstagramEmbeds = instagramVideos.some(
     (item) =>
       item.url.includes("/reel/") || item.url.includes("/p/") || item.url.includes("/tv/"),
@@ -31,34 +34,57 @@ export default function Home() {
 
   return (
     <div>
-      <section className="relative overflow-hidden border-b border-white/80 bg-gradient-to-br from-emerald-50/70 via-amber-50/70 to-sky-50/70">
-        <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-24 lg:px-8">
+      <section className="relative overflow-hidden border-b border-white/80 bg-gradient-to-br from-indigo-50/70 via-stone-100/60 to-amber-50/70">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(67,56,202,0.14),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(180,83,9,0.12),transparent_30%)]" />
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-28 lg:px-8">
           <RevealOnScroll>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+            <span className="inline-flex rounded-full border border-amber-200 bg-white/90 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-amber-700 shadow-sm">
               Missão Humanitária da Igreja
-            </p>
-            <h1 className="mt-3 text-4xl font-black leading-tight text-slate-900 sm:text-5xl">
+            </span>
+            <h1 className="mt-5 max-w-2xl text-3xl font-black leading-tight text-slate-900 sm:text-5xl lg:text-6xl">
               {heroMessage}
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-700">{missionStatement}</p>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-700 sm:text-lg">
+              {missionStatement}
+            </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/doacao"
-                className="rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+                className="rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
               >
                 Doe Agora
               </Link>
               <Link
                 href="/transparencia"
-                className="rounded-full border border-emerald-300 bg-white px-6 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
+                className="rounded-full border border-indigo-300 bg-white px-6 py-3 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50"
               >
                 Ver Transparência
               </Link>
             </div>
+            <div className="mt-10 grid max-w-2xl gap-4 sm:grid-cols-3">
+              {quickStats.map((stat) => (
+                <article key={stat.label} className="rounded-2xl border border-white/80 bg-white/85 p-4 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.45)] backdrop-blur-sm">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    {stat.label}
+                  </p>
+                  <p className="mt-2 text-2xl font-black text-slate-900">{stat.value}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">{stat.description}</p>
+                </article>
+              ))}
+            </div>
           </RevealOnScroll>
 
           <RevealOnScroll className="lg:justify-self-end">
-            <div className="premium-surface relative h-[360px] overflow-hidden rounded-3xl sm:h-[420px] lg:w-[500px]">
+            <div className="premium-surface relative h-[320px] overflow-hidden rounded-[2rem] border border-white/80 sm:h-[460px] lg:w-[520px]">
+              <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-2 bg-gradient-to-b from-slate-950/60 to-transparent px-4 py-3 text-white sm:px-5 sm:py-4">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.18em] text-white/70">Missão em campo</p>
+                  <p className="mt-1 text-sm font-semibold">Registros reais da atuação</p>
+                </div>
+                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold">
+                  Atualizações visuais
+                </span>
+              </div>
               <MissionMediaCarousel images={missionImages} className="h-full w-full" />
             </div>
           </RevealOnScroll>
@@ -72,15 +98,12 @@ export default function Home() {
             title="Transparência e transformação lado a lado"
             subtitle="Acompanhamos mensalmente resultados e prestação de contas para garantir confiança em cada contribuição."
           />
-          <div className="mt-8">
-            <StatsGrid stats={quickStats} />
-          </div>
         </RevealOnScroll>
       </section>
 
       <section className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <RevealOnScroll>
-          <MissionMap />
+          <MissionMap representatives={representatives} />
         </RevealOnScroll>
       </section>
 
@@ -114,7 +137,7 @@ export default function Home() {
         </RevealOnScroll>
       </section>
 
-      <section className="border-y border-emerald-100 bg-white">
+      <section className="border-y border-indigo-100 bg-white">
         <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <RevealOnScroll>
             <SectionHeading
@@ -137,7 +160,7 @@ export default function Home() {
                     href={instagramProfileUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-4 inline-flex rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+                    className="mt-4 inline-flex rounded-full bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800"
                   >
                     Abrir Instagram oficial
                   </a>

@@ -3,14 +3,21 @@ import type { Metadata } from "next";
 import { FinancialTable } from "@/components/FinancialTable";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { SectionHeading } from "@/components/SectionHeading";
-import { monthlyReports, receiptLinks, representatives, timeline, transparencyGoogleSheetUrl } from "@/data/site";
+import { getRepresentatives, getSiteSettings, getTransparencyContent } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Transparência",
   description: "Acompanhe relatórios mensais, categorias de despesas e prestação de contas em tempo real.",
 };
 
-export default function TransparencyPage() {
+export default async function TransparencyPage() {
+  const [transparency, representatives, settings] = await Promise.all([
+    getTransparencyContent(),
+    getRepresentatives(),
+    getSiteSettings(),
+  ]);
+  const { monthlyReports, timeline } = transparency;
+  const { receiptLinks, transparencyGoogleSheetUrl } = settings;
   const hasReports = monthlyReports.length > 0;
   const hasSheet = Boolean(transparencyGoogleSheetUrl);
   const validReceipts = receiptLinks.filter((receipt) => receipt.url && receipt.url !== "#");
@@ -25,6 +32,21 @@ export default function TransparencyPage() {
           subtitle="Publicamos relatórios mensais com origem e destino dos recursos para que cada doador acompanhe o impacto real da contribuição."
         />
       </RevealOnScroll>
+
+      <div className="mt-10 grid gap-4 md:grid-cols-3">
+        <article className="premium-surface rounded-[2rem] p-5">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-700">Relatórios</p>
+          <p className="mt-3 text-3xl font-black text-slate-900">{monthlyReports.length}</p>
+        </article>
+        <article className="premium-surface rounded-[2rem] p-5">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-700">Comprovantes</p>
+          <p className="mt-3 text-3xl font-black text-slate-900">{validReceipts.length}</p>
+        </article>
+        <article className="premium-surface rounded-[2rem] p-5">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-700">Campos ativos</p>
+          <p className="mt-3 text-3xl font-black text-slate-900">{representatives.length}</p>
+        </article>
+      </div>
 
       {hasReports ? (
         <div className="mt-10 space-y-6">
@@ -47,7 +69,7 @@ export default function TransparencyPage() {
       )}
 
       <RevealOnScroll className="mt-8">
-        <section className="premium-surface rounded-2xl p-6">
+        <section className="premium-surface rounded-[2rem] p-6">
           <h3 className="text-lg font-semibold text-slate-900">Relatório operacional inicial</h3>
           <p className="mt-2 text-sm text-slate-700">
             Enquanto os demonstrativos financeiros consolidados são finalizados, publicamos o status
@@ -83,7 +105,7 @@ export default function TransparencyPage() {
 
       <div className="mt-12 grid gap-6 lg:grid-cols-2">
         <RevealOnScroll>
-          <section className="premium-surface rounded-2xl p-6">
+          <section className="premium-surface rounded-[2rem] p-6">
             <h3 className="text-2xl font-bold text-slate-900">Comprovantes (PDF)</h3>
             <p className="mt-2 text-sm text-slate-600">
               Faça download dos documentos de prestação de contas dos últimos meses.
@@ -93,7 +115,7 @@ export default function TransparencyPage() {
                 <a
                   key={receipt.label}
                   href={receipt.url}
-                  className="block text-sm font-medium text-emerald-700 hover:text-emerald-800"
+                  className="block text-sm font-medium text-indigo-700 hover:text-indigo-800"
                 >
                   {receipt.label}
                 </a>
@@ -106,7 +128,7 @@ export default function TransparencyPage() {
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <section className="premium-surface rounded-2xl p-6">
+          <section className="premium-surface rounded-[2rem] p-6">
             <h3 className="text-2xl font-bold text-slate-900">Linha do tempo</h3>
             <div className="mt-4 space-y-3">
               {timeline.map((item) => (

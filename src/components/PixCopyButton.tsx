@@ -26,7 +26,7 @@ export function PixCopyButton({ pixKey }: PixCopyButtonProps) {
     <button
       type="button"
       onClick={handleCopy}
-      className="mt-5 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
+      className="rounded-full bg-indigo-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-800"
     >
       {copied ? "Chave copiada!" : "Copiar chave PIX"}
     </button>

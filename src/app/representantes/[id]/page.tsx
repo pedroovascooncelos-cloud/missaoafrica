@@ -5,19 +5,20 @@ import { notFound } from "next/navigation";
 
 import { InstagramEmbed } from "@/components/InstagramEmbed";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
-import { representatives } from "@/data/site";
+import { getRepresentativeById, getRepresentativeIds } from "@/data/site";
 
 type RepresentativeDetailsProps = {
   params: Promise<{ id: string }>;
 };
 
 export async function generateStaticParams() {
-  return representatives.map((representative) => ({ id: representative.id }));
+  const ids = await getRepresentativeIds();
+  return ids.map((id) => ({ id }));
 }
 
 export async function generateMetadata({ params }: RepresentativeDetailsProps): Promise<Metadata> {
   const { id } = await params;
-  const representative = representatives.find((item) => item.id === id);
+  const representative = await getRepresentativeById(id);
 
   if (!representative) {
     return { title: "Representante não encontrado" };
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: RepresentativeDetailsProps): 
 
 export default async function RepresentativeDetailsPage({ params }: RepresentativeDetailsProps) {
   const { id } = await params;
-  const representative = representatives.find((item) => item.id === id);
+  const representative = await getRepresentativeById(id);
 
   if (!representative) {
     notFound();
@@ -52,15 +53,15 @@ export default async function RepresentativeDetailsPage({ params }: Representati
           </div>
 
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-amber-700">
               {representative.pais} - {representative.regiao}
             </p>
-            <h1 className="mt-2 text-4xl font-black text-slate-900">{representative.nome}</h1>
-            <p className="mt-2 text-lg font-medium text-slate-700">{representative.funcao}</p>
+            <h1 className="mt-2 text-3xl font-black text-slate-900 sm:text-4xl">{representative.nome}</h1>
+            <p className="mt-2 text-base font-medium text-slate-700 sm:text-lg">{representative.funcao}</p>
             <p className="mt-6 leading-relaxed text-slate-600">{representative.descricao}</p>
             <Link
               href="/doacao"
-              className="mt-6 inline-flex rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
+              className="mt-6 inline-flex rounded-full bg-indigo-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-800"
             >
               Apoiar este campo missionário
             </Link>

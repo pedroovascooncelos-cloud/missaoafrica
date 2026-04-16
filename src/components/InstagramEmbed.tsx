@@ -53,7 +53,7 @@ export function InstagramEmbed({ title, url }: InstagramEmbedProps) {
           />
         </div>
       ) : (
-        <div className="flex aspect-video items-center justify-center bg-gradient-to-br from-emerald-50 via-sky-50 to-amber-50 p-6">
+        <div className="flex aspect-video items-center justify-center bg-gradient-to-br from-indigo-50 via-slate-50 to-amber-50 p-6">
           <p className="max-w-sm text-center text-sm text-slate-700">
             Este item aponta para o perfil oficial no Instagram.
             <span className="mt-1 block font-semibold text-slate-900">{handle}</span>
@@ -67,7 +67,7 @@ export function InstagramEmbed({ title, url }: InstagramEmbedProps) {
           href={url}
           target="_blank"
           rel="noreferrer"
-          className="mt-2 inline-flex text-sm font-medium text-emerald-700 transition hover:text-emerald-800"
+          className="mt-2 inline-flex text-sm font-medium text-indigo-700 transition hover:text-indigo-800"
         >
           Abrir vídeo no Instagram
         </a>

@@ -6,14 +6,20 @@ import { InstagramEmbed } from "@/components/InstagramEmbed";
 import { MissionMediaCarousel } from "@/components/MissionMediaCarousel";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { SectionHeading } from "@/components/SectionHeading";
-import { instagramProfileUrl, instagramVideos, missionImages, representatives } from "@/data/site";
+import { getMissionImages, getRepresentatives, getSiteSettings } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Impacto",
   description: "Histórias, vídeos e resultados reais das comunidades apoiadas pela missão.",
 };
 
-export default function ImpactPage() {
+export default async function ImpactPage() {
+  const [settings, representatives, missionImages] = await Promise.all([
+    getSiteSettings(),
+    getRepresentatives(),
+    getMissionImages(),
+  ]);
+  const { instagramProfileUrl, instagramVideos } = settings;
   const beforeImage = representatives[0]?.galeria[0];
   const afterImage = representatives[0]?.galeria[1] ?? representatives[1]?.galeria[0];
   const instagramMedia = [
@@ -39,18 +45,31 @@ export default function ImpactPage() {
           />
         </RevealOnScroll>
 
-        <RevealOnScroll className="mt-10">
-          <article className="premium-surface rounded-2xl p-5">
-            <p className="text-base font-semibold text-slate-900">Dados numéricos em atualização</p>
-            <p className="mt-2 text-sm text-slate-700">
-              Para manter transparência, os números oficiais de impacto serão publicados somente após
-              validação mensal da equipe da missão.
-            </p>
-          </article>
-        </RevealOnScroll>
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          <RevealOnScroll>
+            <article className="premium-surface rounded-[2rem] p-5">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-700">Atualizações</p>
+              <p className="mt-3 text-3xl font-black text-slate-900">{instagramMedia.length}</p>
+            </article>
+          </RevealOnScroll>
+          <RevealOnScroll>
+            <article className="premium-surface rounded-[2rem] p-5">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-700">Representantes</p>
+              <p className="mt-3 text-3xl font-black text-slate-900">{representatives.length}</p>
+            </article>
+          </RevealOnScroll>
+          <RevealOnScroll>
+            <article className="rounded-[2rem] border border-slate-200 bg-slate-900 p-5 text-white">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-200">Transparência</p>
+              <p className="mt-3 text-sm leading-7 text-slate-300">
+                Os indicadores oficiais são publicados somente após validação mensal da equipe.
+              </p>
+            </article>
+          </RevealOnScroll>
+        </div>
       </section>
 
-      <section className="border-y border-emerald-100 bg-white">
+      <section className="border-y border-indigo-100 bg-white">
         <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <RevealOnScroll>
             <h2 className="text-3xl font-bold text-slate-900">Vídeos do Instagram</h2>
@@ -69,7 +88,7 @@ export default function ImpactPage() {
             </div>
           ) : (
             <RevealOnScroll className="mt-8">
-              <article className="premium-surface rounded-2xl p-6">
+              <article className="premium-surface rounded-[2rem] p-6">
                 <p className="text-sm text-slate-700">
                   Ainda não temos links diretos de post/reel para embed. Enquanto isso, acompanhe os
                   perfis oficiais dos missionários:
@@ -81,28 +100,30 @@ export default function ImpactPage() {
                       href={rep.videoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-full bg-white px-4 py-2 text-sm font-medium text-emerald-700 ring-1 ring-emerald-200 hover:bg-emerald-50"
+                      className="rounded-full bg-white px-4 py-2 text-sm font-medium text-indigo-700 ring-1 ring-indigo-200 hover:bg-indigo-50"
                     >
                       {rep.nome}
                     </a>
                   ))}
                 </div>
-                <a
-                  href={instagramProfileUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
-                >
-                  Abrir Instagram principal
-                </a>
-                <a
-                  href={`${instagramProfileUrl}stories/`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-3 ml-2 inline-flex rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50"
-                >
-                  Ver Stories
-                </a>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <a
+                    href={instagramProfileUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex rounded-full bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800"
+                  >
+                    Abrir Instagram principal
+                  </a>
+                  <a
+                    href={`${instagramProfileUrl}stories/`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex rounded-full border border-indigo-200 bg-white px-4 py-2 text-sm font-semibold text-indigo-700 hover:bg-indigo-50"
+                  >
+                    Ver Stories
+                  </a>
+                </div>
               </article>
             </RevealOnScroll>
           )}
@@ -118,7 +139,7 @@ export default function ImpactPage() {
         </RevealOnScroll>
         <div className="mt-8 grid gap-5 lg:grid-cols-2">
           <RevealOnScroll>
-            <article className="premium-surface overflow-hidden rounded-2xl">
+            <article className="premium-surface overflow-hidden rounded-[2rem]">
               <div className="relative h-72">
                 <Image
                   src={beforeImage ?? "/api/assets/Manuel/2.jpeg"}
@@ -138,7 +159,7 @@ export default function ImpactPage() {
           </RevealOnScroll>
 
           <RevealOnScroll>
-            <article className="premium-surface overflow-hidden rounded-2xl">
+            <article className="premium-surface overflow-hidden rounded-[2rem]">
               <div className="relative h-72">
                 <Image
                   src={afterImage ?? "/api/assets/Isaias/2.jpeg"}
@@ -165,26 +186,26 @@ export default function ImpactPage() {
           <p className="mt-3 max-w-2xl text-slate-600">
             Carrossel automático com as fotos reais dos missionários cadastrados.
           </p>
-          <div className="mt-6 h-[360px] overflow-hidden rounded-2xl border border-slate-200 bg-white">
+          <div className="mt-6 h-[360px] overflow-hidden rounded-[2rem] border border-slate-200 bg-white">
             <MissionMediaCarousel images={missionImages} className="h-full w-full" />
           </div>
         </RevealOnScroll>
       </section>
 
-      <section className="border-t border-emerald-100 bg-emerald-50/40">
+      <section className="border-t border-indigo-100 bg-indigo-50/30">
         <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <RevealOnScroll>
             <h2 className="text-3xl font-bold text-slate-900">Acompanhe os relatórios completos</h2>
           </RevealOnScroll>
           <RevealOnScroll className="mt-8">
-            <article className="premium-surface rounded-2xl p-6">
+            <article className="premium-surface rounded-[2rem] p-6">
               <p className="text-sm text-slate-700">
                 Para garantir credibilidade, todos os dados financeiros e comprovantes ficam na
                 página de transparência.
               </p>
               <Link
                 href="/transparencia"
-                className="mt-4 inline-flex rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700"
+                className="mt-4 inline-flex rounded-full bg-indigo-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-800"
               >
                 Ir para transparência
               </Link>

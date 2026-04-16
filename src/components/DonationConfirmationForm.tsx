@@ -17,16 +17,20 @@ export function DonationConfirmationForm() {
 
     try {
       const formData = new FormData(event.currentTarget);
-      const payload = new URLSearchParams();
+      const payload = {
+        nome: String(formData.get("nome") || ""),
+        email: String(formData.get("email") || ""),
+        whatsapp: String(formData.get("whatsapp") || ""),
+        valor: Number(formData.get("valor") || 0),
+        txid: String(formData.get("txid") || ""),
+        comprovante: String(formData.get("comprovante") || ""),
+        consentimento: formData.get("consentimento") === "on",
+      };
 
-      for (const [key, value] of formData.entries()) {
-        payload.append(key, String(value));
-      }
-
-      const response = await fetch("/__forms.html", {
+      const response = await fetch("/api/doacoes/confirmacao", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: payload.toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -59,7 +63,7 @@ export function DonationConfirmationForm() {
             type="text"
             name="nome"
             required
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
           />
         </label>
         <label className="text-sm text-slate-700">
@@ -68,7 +72,7 @@ export function DonationConfirmationForm() {
             type="email"
             name="email"
             required
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
           />
         </label>
       </div>
@@ -80,7 +84,7 @@ export function DonationConfirmationForm() {
             type="text"
             name="whatsapp"
             required
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
           />
         </label>
         <label className="text-sm text-slate-700">
@@ -91,7 +95,7 @@ export function DonationConfirmationForm() {
             min="1"
             step="1"
             required
-            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+            className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
           />
         </label>
       </div>
@@ -101,7 +105,7 @@ export function DonationConfirmationForm() {
         <input
           type="text"
           name="txid"
-          className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+          className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
         />
       </label>
 
@@ -110,7 +114,7 @@ export function DonationConfirmationForm() {
         <input
           type="url"
           name="comprovante"
-          className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+          className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
         />
       </label>
 
@@ -123,7 +127,7 @@ export function DonationConfirmationForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700"
+        className="rounded-full bg-indigo-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-800"
       >
         {isSubmitting ? "Enviando..." : "Enviar confirmação"}
       </button>

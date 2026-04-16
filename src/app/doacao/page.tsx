@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PixCopyButton } from "@/components/PixCopyButton";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { SectionHeading } from "@/components/SectionHeading";
-import { impactByDonation, institutionalData, pixData } from "@/data/site";
+import { getSiteSettings } from "@/data/site";
 import { formatCurrency } from "@/components/format";
 
 export const metadata: Metadata = {
@@ -12,7 +12,9 @@ export const metadata: Metadata = {
   description: "Contribua com o projeto por PIX e acompanhe como cada real é aplicado em impacto humanitário.",
 };
 
-export default function DonationPage() {
+export default async function DonationPage() {
+  const { impactByDonation, institutionalData, pixData } = await getSiteSettings();
+
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
       <RevealOnScroll>
@@ -30,7 +32,7 @@ export default function DonationPage() {
             <p className="mt-2 text-sm text-slate-600">
               Método rápido e seguro para contribuir de qualquer lugar do Brasil.
             </p>
-            <div className="mt-5 space-y-3 rounded-xl bg-emerald-50 p-4">
+            <div className="mt-5 space-y-3 rounded-xl bg-indigo-50 p-4">
               <p className="text-sm">
                 <span className="font-semibold text-slate-900">Chave PIX:</span>{" "}
                 <span className="text-slate-700">{pixData.chave}</span>
@@ -50,13 +52,15 @@ export default function DonationPage() {
                 </p>
               ) : null}
             </div>
-            <PixCopyButton pixKey={pixData.chave} />
-            <Link
-              href="/doacao/confirmar"
-              className="ml-3 inline-flex rounded-full border border-emerald-300 bg-white px-5 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-50"
-            >
-              Já doei, enviar confirmação
-            </Link>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <PixCopyButton pixKey={pixData.chave} />
+              <Link
+                href="/doacao/confirmar"
+                className="inline-flex rounded-full border border-indigo-300 bg-white px-5 py-2.5 text-sm font-semibold text-indigo-700 hover:bg-indigo-50"
+              >
+                Já doei, enviar confirmação
+              </Link>
+            </div>
           </section>
         </RevealOnScroll>
 
@@ -78,7 +82,7 @@ export default function DonationPage() {
           <h2 className="text-2xl font-bold text-slate-900">Impacto por valor doado</h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {impactByDonation.map((item) => (
-              <article key={item.valor} className="rounded-xl border border-emerald-100 bg-emerald-50 p-4">
+              <article key={item.valor} className="rounded-xl border border-indigo-100 bg-indigo-50 p-4">
                 <p className="text-xl font-bold text-slate-900">{formatCurrency(item.valor)}</p>
                 <p className="mt-2 text-sm text-slate-700">{item.impacto}</p>
               </article>
@@ -128,16 +132,16 @@ export default function DonationPage() {
       </RevealOnScroll>
 
       <RevealOnScroll className="mt-12">
-        <section className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-600 to-emerald-700 p-7 text-white shadow-lg">
+        <section className="rounded-2xl border border-indigo-200 bg-gradient-to-r from-indigo-700 to-indigo-800 p-7 text-white shadow-lg">
           <h2 className="text-3xl font-bold">Doe agora e participe da transformação</h2>
-          <p className="mt-3 max-w-2xl text-emerald-50">
+          <p className="mt-3 max-w-2xl text-indigo-50">
             Sua doação financia ações humanitárias concretas e mensuráveis. Acompanhe tudo em nossa
             página de transparência.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
               href="/doacao/confirmar"
-              className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
+              className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50"
             >
               Confirmar doação
             </a>

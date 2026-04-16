@@ -13,7 +13,7 @@ export default function ThanksDonationPage() {
     <div className="mx-auto w-full max-w-4xl px-4 py-20 sm:px-6 lg:px-8">
       <RevealOnScroll>
         <section className="premium-surface rounded-2xl p-8 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-amber-700">
             Confirmação enviada
           </p>
           <h1 className="mt-3 text-4xl font-black text-slate-900">Obrigado por sua doação</h1>
@@ -25,7 +25,7 @@ export default function ThanksDonationPage() {
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href="/transparencia"
-              className="rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700"
+              className="rounded-full bg-indigo-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-800"
             >
               Acompanhar transparência
             </Link>

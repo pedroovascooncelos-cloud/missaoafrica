@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 
 import { RevealOnScroll } from "@/components/RevealOnScroll";
-import { institutionalData } from "@/data/site";
+import { getSiteSettings } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Termos de Uso",
   description: "Termos e condições de uso do site da Missão África.",
 };
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const { institutionalData } = await getSiteSettings();
+
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
       <RevealOnScroll>
